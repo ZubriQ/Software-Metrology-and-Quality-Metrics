@@ -3,7 +3,7 @@ namespace _1_Halstead_Metrics.Analysis;
 public class Halstead
 {
     private readonly Random _random = new();
-    private HalsteadArray? _array;
+    private HalsteadArray _array = null!;
 
     public HalsteadResult GetMetricsData(int dictionarySize, int sampleSize)
     {
