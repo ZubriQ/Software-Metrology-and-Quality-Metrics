@@ -1,4 +1,6 @@
-﻿namespace _1_Halstead_Metrics;
+﻿using _1_Halstead_Metrics.Analysis;
+
+namespace _1_Halstead_Metrics;
 
 internal class Program
 {
@@ -36,7 +38,7 @@ internal class Program
         Console.WriteLine($"Measurement error (d):\t{Math.Sqrt(result.Dispersion) / result.ExpectedValue}");
 
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"New sample size (N):\t{((int)result.NewExpectedSampleSize).ToString("### ### ##0")}");
+        Console.WriteLine($"New sample size (N):\t{((int)result.NewExpectedSampleSize):### ### ##0}");
         Console.ResetColor();
 
         Console.WriteLine();
