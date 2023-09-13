@@ -2,63 +2,67 @@
 
 internal class Program
 {
-    private static readonly Random _random = new();
-
-    public const double Quantile = 1.962;
+    private static readonly Random Random = new();
 
     public static int PreviousSpotValue { get; set; } = -1;
     public static int CurrentSpotValue { get; set; } = -1;
-    public static ulong GeneratedNumberCount { get; set; } = 0;
+    public static ulong GeneratedNumberCount { get; set; }
 
     public static int DictionarySize { get; set; }
     public static int InputedSampleSize { get; set; }
 
-    public static double Sum { get; set; } = 0;
+    public static double Sum { get; set; }
     public static double Dispersion { get; set; }
     public static double ExpectedValue { get; set; }
     public static double NewExpectedSampleSize { get; set; }
-
-
-    static void Main()
+    
+    private static void Main()
     {
         while (true)
         {
             InputParameters();
-
-            for (int i = 0; i < InputedSampleSize; i++)
-            {
-                int arraySpotGenerateCount = 0;
-                GenerateRandomNumberedArray(ref arraySpotGenerateCount);
-                ResetPreviousValue();
-
-                Sum += (double)(Math.Pow(arraySpotGenerateCount, 2) / InputedSampleSize);
-            }
-
-            ExpectedValue = GeneratedNumberCount / (double)InputedSampleSize;
-            Dispersion = Sum - Math.Pow(ExpectedValue, 2);
-            NewExpectedSampleSize = (Math.Pow(Quantile, 2) * Dispersion) / 0.01;
-
+            CalculateSumOfSquaredSpotCounts();
+            CalculateNewExpectedSampleSize();
             OutputValues();
             ResetParameters();
         }
     }
-
+    
     private static void InputParameters()
     {
         Console.WriteLine("Enter dictionary size:");
-        DictionarySize = Int32.Parse(Console.ReadLine()!);
+        DictionarySize = int.Parse(Console.ReadLine()!);
         Console.WriteLine("Enter sample size:");
-        InputedSampleSize = Int32.Parse(Console.ReadLine()!);
+        InputedSampleSize = int.Parse(Console.ReadLine()!);
     }
 
+    private static void CalculateNewExpectedSampleSize()
+    {
+        ExpectedValue = GeneratedNumberCount / (double)InputedSampleSize;
+        Dispersion = Sum - Math.Pow(ExpectedValue, 2);
+        NewExpectedSampleSize = Math.Pow(Constants.Quantile, 2) * Dispersion / 0.01;
+    }
+
+    private static void CalculateSumOfSquaredSpotCounts()
+    {
+        for (int i = 0; i < InputedSampleSize; i++)
+        {
+            int arraySpotGenerateCount = 0;
+            GenerateRandomNumberedArray(ref arraySpotGenerateCount);
+            ResetPreviousValue();
+
+            Sum += Math.Pow(arraySpotGenerateCount, 2) / InputedSampleSize;
+        }
+    }
+    
     private static void GenerateRandomNumberedArray(ref int arraySpotGenerateCount)
     {
-        int RemainingArraySpots = DictionarySize;
+        int remainingArraySpots = DictionarySize;
         int[] dictionary = new int[DictionarySize];
 
-        while (RemainingArraySpots > 0)
+        while (remainingArraySpots > 0)
         {
-            int randomlySelectedArraySpot = _random.Next(0, DictionarySize);
+            int randomlySelectedArraySpot = Random.Next(0, DictionarySize);
             CurrentSpotValue = randomlySelectedArraySpot;
             if (CurrentSpotValue == PreviousSpotValue)
             {
@@ -66,7 +70,7 @@ internal class Program
             }
             if (dictionary[CurrentSpotValue] == 0)
             {
-                RemainingArraySpots--;
+                remainingArraySpots--;
             }
 
             arraySpotGenerateCount++;
@@ -78,6 +82,24 @@ internal class Program
 
     private static void ResetPreviousValue() { PreviousSpotValue = 0; }
 
+    private static void OutputValues()
+    {
+        Console.WriteLine();
+        
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine($"Average (M):\t{(int)(Math.Round(ExpectedValue, 3))}");
+        Console.WriteLine($"Disperse (D):\t{(int)(Math.Round(Dispersion, 3))}");
+        Console.ResetColor();
+
+        Console.WriteLine($"Measurement error (d):\t{Math.Sqrt(Dispersion) / ExpectedValue}");
+
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine($"New sample size (N):\t{((int)NewExpectedSampleSize).ToString("### ### ##0")}");
+        Console.ResetColor();
+
+        Console.WriteLine();
+    }
+    
     private static void ResetParameters()
     {
         PreviousSpotValue = -1;
@@ -87,22 +109,5 @@ internal class Program
         ExpectedValue = 0;
         Sum = 0;
         NewExpectedSampleSize = 0;
-    }
-
-    private static void OutputValues()
-    {
-        Console.WriteLine();
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($"Average (M):\t{(int)(Math.Round(ExpectedValue, 3))}");
-        Console.WriteLine($"Disperse (D):\t{(int)(Math.Round(Dispersion, 3))}");
-        Console.ResetColor();
-
-        Console.WriteLine($"delta:\t{Math.Sqrt(Dispersion) / ExpectedValue}");
-
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"New sample size (N):\t{((int)NewExpectedSampleSize).ToString("### ### ##0")}");
-        Console.ResetColor();
-
-        Console.WriteLine();
     }
 }
