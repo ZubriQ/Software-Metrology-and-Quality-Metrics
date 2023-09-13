@@ -19,16 +19,19 @@ public static class HalsteadIO
         Console.WriteLine();
         
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($"Average (M):\t{(int)(Math.Round(result.ExpectedValue, 3))}");
-        Console.WriteLine($"Disperse (D):\t{(int)(Math.Round(result.Dispersion, 3))}");
+        Console.WriteLine($"Average (M):\t\t {Math.Round(result.ExpectedValue, 2)}");
+        Console.WriteLine($"Disperse (D):\t\t {Math.Round(result.Dispersion, 2)}");
         Console.ResetColor();
 
-        Console.WriteLine($"Measurement error (d):\t{Math.Sqrt(result.Dispersion) / result.ExpectedValue}");
+        Console.WriteLine($"Measurement error (d):\t {GetMeasurementErrorValue(result)}");
 
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"New sample size (N):\t{((int)result.NewExpectedSampleSize):### ### ##0}");
+        Console.WriteLine($"New sample size (N):\t{(int)result.NewExpectedSampleSize:### ### ##0}");
         Console.ResetColor();
 
         Console.WriteLine();
     }
+
+    private static double GetMeasurementErrorValue(HalsteadResult result) =>
+        Math.Round(Math.Sqrt(result.Dispersion) / result.ExpectedValue, 8);
 }
