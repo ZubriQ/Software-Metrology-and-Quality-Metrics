@@ -4,11 +4,12 @@ public class HalsteadDictionary
 {
     private readonly Random _random = new();
     
+    private int _previousSpotValue = -1;
+    private int _currentSpotValue = -1;
+
     public int Size { get; }
     public int SampleSize { get; }
-    
-    private int PreviousSpotValue { get; set; } = -1;
-    private int CurrentSpotValue { get; set; } = -1;
+
     public long GeneratedNumberCount { get; private set; }
     
     public HalsteadDictionary(int dictionarySize, int sampleSize)
@@ -25,20 +26,20 @@ public class HalsteadDictionary
         
         while (remainingArraySpots > 0)
         {
-            CurrentSpotValue = _random.Next(0, Size);
-            if (CurrentSpotValue == PreviousSpotValue)
+            _currentSpotValue = _random.Next(0, Size);
+            if (_currentSpotValue == _previousSpotValue)
             {
                 continue;
             }
-            if (array[CurrentSpotValue] == 0)
+            if (array[_currentSpotValue] == 0)
             {
                 remainingArraySpots--;
             }
             
             specificDictionaryGeneratedNumberCount++;
             GeneratedNumberCount++;
-            array[CurrentSpotValue]++;
-            PreviousSpotValue = CurrentSpotValue;
+            array[_currentSpotValue]++;
+            _previousSpotValue = _currentSpotValue;
         }
         
         return specificDictionaryGeneratedNumberCount;
