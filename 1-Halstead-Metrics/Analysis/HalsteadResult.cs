@@ -1,6 +1,6 @@
 namespace _1_Halstead_Metrics.Analysis;
 
 public record HalsteadResult(
-    double Dispersion,
-    double ExpectedValue,
+    MetricData StatisticalValues,
+    MetricData TheoreticalValues,
     double NewExpectedSampleSize);

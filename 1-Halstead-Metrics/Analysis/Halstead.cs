@@ -2,63 +2,43 @@ namespace _1_Halstead_Metrics.Analysis;
 
 public class Halstead
 {
-    private readonly Random _random = new();
-    private HalsteadArray _array = null!;
+    private HalsteadDictionary _dictionary = null!;
 
     public HalsteadResult GetMetricsData(int dictionarySize, int sampleSize)
     {
-        _array = new HalsteadArray(dictionarySize, sampleSize);
+        _dictionary = new HalsteadDictionary(dictionarySize, sampleSize);
 
-        var sum = CalculateSumOfSquaredSpotCounts();
-        var halsteadValues = EstimateNewHalsteadValues(sum);
+        var programLength = CalculateSumOfDictionaryLengths();
+        var halsteadValues = CalculateHalsteadValues(programLength);
         return halsteadValues;
     }
 
-    private double CalculateSumOfSquaredSpotCounts()
+    private double CalculateSumOfDictionaryLengths()
     {
         double sum = 0;
-        for (var i = 0; i < _array.SampleSize; i++)
+        for (var i = 0; i < _dictionary.SampleSize; i++)
         {
-            var arraySpotGenerateCount = 0;
-            GenerateRandomNumberedArray(ref arraySpotGenerateCount);
-
-            sum += Math.Pow(arraySpotGenerateCount, 2) / _array.SampleSize;
+            var oneDictionaryLength = _dictionary.GenerateSpecificDictionaryLength();
+            sum += Math.Pow(oneDictionaryLength, 2) / _dictionary.SampleSize;
         }
 
         return sum;
     }
     
-    private void GenerateRandomNumberedArray(ref int arraySpotGenerateCount)
+    private HalsteadResult CalculateHalsteadValues(double sum)
     {
-        var remainingArraySpots = _array.Size;
-        var dictionary = new int[_array.Size];
-
-        while (remainingArraySpots > 0)
-        {
-            var randomlySelectedArraySpot = _random.Next(0, _array.Size);
-            _array.CurrentSpotValue = randomlySelectedArraySpot;
-            if (_array.CurrentSpotValue == _array.PreviousSpotValue)
-            {
-                continue;
-            }
-            if (dictionary[_array.CurrentSpotValue] == 0)
-            {
-                remainingArraySpots--;
-            }
-
-            arraySpotGenerateCount++;
-            _array.GeneratedNumberCount++;
-            dictionary[_array.CurrentSpotValue]++;
-            _array.PreviousSpotValue = _array.CurrentSpotValue;
-        }
-    }
-    
-    private HalsteadResult EstimateNewHalsteadValues(double sum)
-    {
-        var expectedValue = (double)_array.GeneratedNumberCount / _array.SampleSize;
+        var expectedValue = (double)_dictionary.GeneratedNumberCount / _dictionary.SampleSize;
         var dispersion = sum - Math.Pow(expectedValue, 2);
+        var measurementError = Math.Round(Math.Sqrt(dispersion) / expectedValue, 8);
+        var statisticalValues = new MetricData(expectedValue, dispersion, measurementError);
+
+        var expectedValue2 = 0.9 * _dictionary.Size * Math.Log2(_dictionary.Size);
+        var dispersion2 = Math.Pow(Math.PI, 2) * Math.Pow(_dictionary.Size, 2) / 6;
+        var measurementError2 = Math.Round(Math.Sqrt(dispersion2) / expectedValue2, 8);
+        var theoreticalValues = new MetricData(expectedValue2, dispersion2, measurementError2);
+        
         var newExpectedSampleSize = Math.Pow(Constants.Quantile, 2) * dispersion / 0.01;
 
-        return new HalsteadResult(expectedValue, dispersion, newExpectedSampleSize);
+        return new HalsteadResult(statisticalValues, theoreticalValues, newExpectedSampleSize);
     }
 }
