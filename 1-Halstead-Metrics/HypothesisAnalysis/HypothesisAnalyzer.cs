@@ -6,19 +6,19 @@ public class HypothesisAnalyzer
 {
     private HypothesisTestData _testData = null!;
 
-    public HypothesisResponse Analyze(HypothesisTestData testData)
+    public HypothesisResult Analyze(HypothesisTestData testData)
     {
         _testData = testData;
-        return new HypothesisResponse(GetCalculatedLength(), GetExperimentalLength());
+        return new HypothesisResult(GetCalculatedLength(), GetExperimentalLength());
     }
     
     /// <summary>
     /// Uses distinct element counts of operators and operands: (η1 * log2(η1) + η2 * log2(η2)).
     /// </summary>
     /// <returns>Calculated length (Ñ).</returns>
-    private double GetCalculatedLength() =>
+    private double GetCalculatedLength() => Math.Round(
         _testData.Operands.DistinctElementsCount * Math.Log2(_testData.Operands.DistinctElementsCount) +
-        _testData.Operators.DistinctElementsCount * Math.Log2(_testData.Operators.DistinctElementsCount);
+        _testData.Operators.DistinctElementsCount * Math.Log2(_testData.Operators.DistinctElementsCount), 4);
 
     /// <summary>
     /// Sum of operators and operands appearances in code (N1 + N2).
