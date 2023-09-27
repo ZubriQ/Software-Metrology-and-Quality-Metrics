@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace _1_Halstead_Metrics.Analysis;
 
 public class HalsteadDictionary
@@ -19,25 +21,25 @@ public class HalsteadDictionary
     {
         long specificDictionaryGeneratedNumberCount = 0;
         var remainingArraySpots = Size;
-        var array = new int[Size];
+        var array = new BitArray(Size);
         var previousSpotValue = -1;
-        
+
         while (remainingArraySpots > 0)
         {
             var currentSpotValue = Random.Next(0, Size);
             if (currentSpotValue == previousSpotValue) continue;
-            
-            if (array[currentSpotValue] == 0)
+
+            if (!array.Get(currentSpotValue))
             {
                 remainingArraySpots--;
             }
-            
+
             specificDictionaryGeneratedNumberCount++;
             GeneratedNumberCount++;
-            array[currentSpotValue]++;
+            array.Set(currentSpotValue, true);
             previousSpotValue = currentSpotValue;
         }
-        
+
         return specificDictionaryGeneratedNumberCount;
     }
 }
