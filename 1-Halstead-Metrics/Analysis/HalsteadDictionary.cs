@@ -2,11 +2,8 @@ namespace _1_Halstead_Metrics.Analysis;
 
 public class HalsteadDictionary
 {
-    private readonly Random _random = new();
+    private static readonly Random Random = new();
     
-    private int _previousSpotValue = -1;
-    private int _currentSpotValue = -1;
-
     public int Size { get; }
     public int SampleSize { get; }
 
@@ -18,28 +15,27 @@ public class HalsteadDictionary
         SampleSize = sampleSize;
     }
     
-    public long GenerateSpecificDictionaryLength()
+    public long GenerateDictionaryLength()
     {
         long specificDictionaryGeneratedNumberCount = 0;
         var remainingArraySpots = Size;
         var array = new int[Size];
+        var previousSpotValue = -1;
         
         while (remainingArraySpots > 0)
         {
-            _currentSpotValue = _random.Next(0, Size);
-            if (_currentSpotValue == _previousSpotValue)
-            {
-                continue;
-            }
-            if (array[_currentSpotValue] == 0)
+            var currentSpotValue = Random.Next(0, Size);
+            if (currentSpotValue == previousSpotValue) continue;
+            
+            if (array[currentSpotValue] == 0)
             {
                 remainingArraySpots--;
             }
             
             specificDictionaryGeneratedNumberCount++;
             GeneratedNumberCount++;
-            array[_currentSpotValue]++;
-            _previousSpotValue = _currentSpotValue;
+            array[currentSpotValue]++;
+            previousSpotValue = currentSpotValue;
         }
         
         return specificDictionaryGeneratedNumberCount;

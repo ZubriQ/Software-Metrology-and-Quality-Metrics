@@ -18,13 +18,14 @@ public class Halstead
         double sum = 0;
         for (var i = 0; i < _dictionary.SampleSize; i++)
         {
-            var oneDictionaryLength = _dictionary.GenerateSpecificDictionaryLength();
+            var oneDictionaryLength = _dictionary.GenerateDictionaryLength();
             sum += Math.Pow(oneDictionaryLength, 2) / _dictionary.SampleSize;
         }
 
         return sum;
     }
-    
+
+    #region  Calculation of final metric values
     private HalsteadResult CalculateHalsteadValues(double sum)
     {
         var statisticalValues = CalculateStatisticalValues(sum);
@@ -52,4 +53,5 @@ public class Halstead
 
     private static double CalculateMeasurementError(double dispersion, double expectedValue) =>
         Math.Round(Math.Sqrt(dispersion) / expectedValue, 8);
+    #endregion
 }
