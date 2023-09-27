@@ -27,18 +27,29 @@ public class Halstead
     
     private HalsteadResult CalculateHalsteadValues(double sum)
     {
-        var expectedValue = (double)_dictionary.GeneratedNumberCount / _dictionary.SampleSize;
-        var dispersion = sum - Math.Pow(expectedValue, 2);
-        var measurementError = Math.Round(Math.Sqrt(dispersion) / expectedValue, 8);
-        var statisticalValues = new MetricData(expectedValue, dispersion, measurementError);
-
-        var expectedValue2 = 0.9 * _dictionary.Size * Math.Log2(_dictionary.Size);
-        var dispersion2 = Math.Pow(Math.PI, 2) * Math.Pow(_dictionary.Size, 2) / 6;
-        var measurementError2 = Math.Round(Math.Sqrt(dispersion2) / expectedValue2, 8);
-        var theoreticalValues = new MetricData(expectedValue2, dispersion2, measurementError2);
-        
-        var newExpectedSampleSize = Math.Pow(Constants.Quantile, 2) * dispersion / 0.01;
+        var statisticalValues = CalculateStatisticalValues(sum);
+        var theoreticalValues = CalculateTheoreticalValues();
+        var newExpectedSampleSize = Math.Pow(Constants.Quantile, 2) * statisticalValues.Dispersion / 0.01;
 
         return new HalsteadResult(statisticalValues, theoreticalValues, newExpectedSampleSize);
     }
+    
+    private MetricData CalculateStatisticalValues(double sum)
+    {
+        var expectedValue = (double)_dictionary.GeneratedNumberCount / _dictionary.SampleSize;
+        var dispersion = sum - Math.Pow(expectedValue, 2);
+        var measurementError = CalculateMeasurementError(dispersion, expectedValue);
+        return new MetricData(expectedValue, dispersion, measurementError);
+    }
+
+    private MetricData CalculateTheoreticalValues()
+    {
+        var expectedValue = 0.9 * _dictionary.Size * Math.Log2(_dictionary.Size);
+        var dispersion = Math.Pow(Math.PI, 2) * Math.Pow(_dictionary.Size, 2) / 6;
+        var measurementError = CalculateMeasurementError(dispersion, expectedValue);
+        return new MetricData(expectedValue, dispersion, measurementError);
+    }
+
+    private static double CalculateMeasurementError(double dispersion, double expectedValue) =>
+        Math.Round(Math.Sqrt(dispersion) / expectedValue, 8);
 }
