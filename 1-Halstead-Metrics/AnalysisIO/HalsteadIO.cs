@@ -19,23 +19,9 @@ public static class HalsteadIO
         Console.WriteLine();
         
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("Statistical Values:");
-        Console.WriteLine($"Average (M):\t\t{Math.Round(result.StatisticalValues.ExpectedValue, 2)}");
-        Console.WriteLine($"Disperse (D):\t\t{Math.Round(result.StatisticalValues.Dispersion, 2)}");
-        Console.WriteLine($"Measurement error (d):\t{result.StatisticalValues.MeasurementError}");
+        Console.WriteLine(result);
         Console.ResetColor();
         
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Theoretical Values:");
-        Console.WriteLine($"Average (M):\t\t{Math.Round(result.TheoreticalValues.ExpectedValue, 2)}");
-        Console.WriteLine($"Disperse (D):\t\t{Math.Round(result.TheoreticalValues.Dispersion, 2)}");
-        Console.WriteLine($"Measurement error (d):\t{result.TheoreticalValues.MeasurementError}");
-        Console.ResetColor();
-
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine($"Stable Sample Size:\t{(int)result.NewExpectedSampleSize:### ### ##0}");
-        Console.ResetColor();
-
         Console.WriteLine();
     }
 }

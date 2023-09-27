@@ -6,6 +6,7 @@
     <RootNamespace>_1_Halstead_Metrics</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 
 </Project>
