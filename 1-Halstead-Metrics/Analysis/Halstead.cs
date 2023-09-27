@@ -1,3 +1,5 @@
+using _1_Halstead_Metrics.Analysis.Models;
+
 namespace _1_Halstead_Metrics.Analysis;
 
 public class Halstead

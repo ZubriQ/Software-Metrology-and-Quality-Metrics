@@ -1,4 +1,4 @@
-namespace _1_Halstead_Metrics.Analysis;
+namespace _1_Halstead_Metrics.Analysis.Models;
 
 public record MetricData(
     double ExpectedValue,
