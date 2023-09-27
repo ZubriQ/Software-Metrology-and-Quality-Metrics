@@ -19,28 +19,46 @@ internal static class Program
 
     private static void Run()
     {
+        DisplayInfo();
+        GiveOptions();
+    }
+
+    private static void DisplayInfo()
+    {
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("\nPress 'd' to test Halstead dictionary.");
         Console.WriteLine("Press 'h' to test Halstead hypothesis.");
         Console.WriteLine("Press 'q' to quit the programme.");
         Console.ResetColor();
-        
-        var option = Console.ReadKey();
-        switch (option.KeyChar)
+    }
+    
+    private static void GiveOptions()
+    {
+        switch (Console.ReadKey().KeyChar)
         {
             case 'd':
-                var (dictionarySize, sampleSize) = HalsteadIO.InputHalsteadDictionaryParameters();
-                var halsteadResult = Halstead.GetMetricsData(dictionarySize, sampleSize);
-                HalsteadIO.PrintHalsteadResultValues(halsteadResult);
+                CalculateHalsteadDictionary();
                 break;
             case 'h':
-                var input = HalsteadIO.InputHypothesisTestData();
-                var hypothesisResult = Analyzer.Analyze(input);
-                HalsteadIO.PrintHypothesisResultValues(hypothesisResult);
+                CalculateHalsteadHypothesis();
                 break;
             case 'q':
                 Environment.Exit(0);
                 break;
         }
+    }
+
+    private static void CalculateHalsteadHypothesis()
+    {
+        var input = HalsteadIO.InputHypothesisTestData();
+        var hypothesisResult = Analyzer.Analyze(input);
+        HalsteadIO.PrintHypothesisResultValues(hypothesisResult);
+    }
+
+    private static void CalculateHalsteadDictionary()
+    {
+        var (dictionarySize, sampleSize) = HalsteadIO.InputHalsteadDictionaryParameters();
+        var halsteadResult = Halstead.GetMetricsData(dictionarySize, sampleSize);
+        HalsteadIO.PrintHalsteadResultValues(halsteadResult);
     }
 }
