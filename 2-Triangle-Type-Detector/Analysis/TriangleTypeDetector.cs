@@ -1,10 +1,10 @@
 namespace _2_Triangle_Type_Detector.Analysis;
 
-public class TriangleTypeDetector
+public static class TriangleTypeDetector
 {
     private const double Tolerance = 1e-10;
 
-    public TriangleType? DetermineType(Triangle triangle) =>
+    public static TriangleType? DetermineType(Triangle triangle) =>
         IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle);
     
     private static TriangleType? IsValid(Triangle triangle) => 
