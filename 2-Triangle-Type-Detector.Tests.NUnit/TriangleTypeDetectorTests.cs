@@ -1,6 +1,6 @@
-namespace _2_Triangle_Type_Detector.Tests.NUnit;
+namespace _2_Triangle_Type_Detector.TriangleTypeDetectorTests.NUnit;
 
-public class Tests
+public class TriangleTypeDetectorTests
 {
     [SetUp]
     public void Setup()
