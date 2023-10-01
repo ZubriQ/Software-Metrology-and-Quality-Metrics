@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-Triangle-Type-Detector", "2-Triangle-Type-Detector.csproj", "{DD357930-6C5F-49B2-AE7C-7695C200285C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
