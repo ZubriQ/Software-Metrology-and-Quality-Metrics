@@ -1,13 +1,14 @@
 namespace _2_Triangle_Type_Detector.Analysis;
 
-public static class TriangleTypeDetector
+public class TriangleTypeDetector
 {
     private const double Tolerance = 1e-10;
 
-    public static TriangleType? DetermineType(Triangle triangle) =>
+    public TriangleType? DetermineType(Triangle triangle) =>
         IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle);
     
     private static TriangleType? IsValid(Triangle triangle) => 
+        triangle.SideA <= 0 || triangle.SideB <= 0 || triangle.SideC <= 0 ||
         !(triangle.SideA + triangle.SideB > triangle.SideC &&
           triangle.SideB + triangle.SideC > triangle.SideA &&
           triangle.SideA + triangle.SideC > triangle.SideB)
@@ -29,7 +30,7 @@ public static class TriangleTypeDetector
         return Math.Abs(aSquared - (bSquared + cSquared)) < Tolerance ||
                Math.Abs(bSquared - (aSquared + cSquared)) < Tolerance ||
                Math.Abs(cSquared - (bSquared + aSquared)) < Tolerance
-            ? TriangleType.Right
+            ? TriangleType.RightAngled
             : null;
     }
 

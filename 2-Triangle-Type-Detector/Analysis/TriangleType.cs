@@ -4,7 +4,7 @@ namespace _2_Triangle_Type_Detector.Analysis;
 public enum TriangleType
 {
     Equilateral,
-    Right,
+    RightAngled,
     Isosceles,
     Scalene,
     Invalid
