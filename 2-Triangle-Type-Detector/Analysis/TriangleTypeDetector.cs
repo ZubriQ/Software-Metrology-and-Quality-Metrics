@@ -4,9 +4,9 @@ public static class TriangleTypeDetector
 {
     private const double Tolerance = 1e-10;
 
-    public static TriangleType? DetermineType(Triangle triangle) =>
-        IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle);
-    
+    public static TriangleType DetermineType(Triangle triangle) =>
+        IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle)!.Value;
+
     private static TriangleType? IsValid(Triangle triangle) => 
         triangle.SideA <= 0 || triangle.SideB <= 0 || triangle.SideC <= 0 ||
         !(triangle.SideA + triangle.SideB > triangle.SideC &&
