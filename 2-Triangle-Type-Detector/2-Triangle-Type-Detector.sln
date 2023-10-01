@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-Triangle-Type-Detector", "2-Triangle-Type-Detector.csproj", "{DD357930-6C5F-49B2-AE7C-7695C200285C}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2-Triangle-Type-Detector", "2-Triangle-Type-Detector.csproj", "{DD357930-6C5F-49B2-AE7C-7695C200285C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-Triangle-Type-Detector.Tests.NUnit", "..\2-Triangle-Type-Detector.Tests.NUnit\2-Triangle-Type-Detector.Tests.NUnit.csproj", "{71D46A82-B94A-4CF2-90C5-B4958341F42F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD357930-6C5F-49B2-AE7C-7695C200285C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D46A82-B94A-4CF2-90C5-B4958341F42F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D46A82-B94A-4CF2-90C5-B4958341F42F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D46A82-B94A-4CF2-90C5-B4958341F42F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D46A82-B94A-4CF2-90C5-B4958341F42F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {678692CF-1EB2-48F0-BA36-6709F5E86022}
 	EndGlobalSection
 EndGlobal
