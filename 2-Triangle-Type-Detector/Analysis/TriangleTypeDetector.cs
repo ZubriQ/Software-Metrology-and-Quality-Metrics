@@ -5,7 +5,7 @@ public static class TriangleTypeDetector
     private const double Tolerance = 1e-10;
 
     public static TriangleType DetermineType(Triangle triangle) =>
-        IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle)!.Value;
+        IsValid(triangle) ?? IsEquilateral(triangle) ?? IsRight(triangle) ?? IsIsosceles(triangle) ?? TriangleType.Scalene;
 
     private static TriangleType? IsValid(Triangle triangle) => 
         triangle.SideA <= 0 || triangle.SideB <= 0 || triangle.SideC <= 0 ||
@@ -39,5 +39,5 @@ public static class TriangleTypeDetector
         Math.Abs(triangle.SideA - triangle.SideC) < Tolerance ||
         Math.Abs(triangle.SideB - triangle.SideC) < Tolerance 
             ? TriangleType.Isosceles
-            : TriangleType.Scalene;
+            : null;
 }
