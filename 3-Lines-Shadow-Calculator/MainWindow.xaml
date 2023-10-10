@@ -20,6 +20,7 @@
         
         <!-- Where the lines are drawn -->
         <Canvas 
+            x:Name="Canvas"
             Grid.Row="0" 
             Grid.Column="1"
             Width="500"
@@ -38,6 +39,7 @@
             Grid.Row="1" 
             Grid.Column="1"
             VerticalAlignment="Center">
+            <!-- Add a new line -->
             <Button
                 x:Name="ButtonAddLine"
                 Height="32"
@@ -48,51 +50,67 @@
                 Add
             </Button>
             
+            <!-- Line Start -->
             <StackPanel Margin="10">
-                <TextBlock VerticalAlignment="Center"  
-                           Margin="5,5,0,5">Point 1:
+                <TextBlock 
+                    VerticalAlignment="Center"  
+                    Margin="5,5,0,5">Point 1:
                 </TextBlock>
                 <DockPanel>
-                    <TextBlock VerticalAlignment="Center"  
-                               Margin="5,5,0,5">X:
+                    <TextBlock 
+                        VerticalAlignment="Center"  
+                        Margin="5,5,0,5">X:
                     </TextBlock>
-                    <TextBox Width="40" 
-                             Height="32" 
-                             Margin="5"
-                             VerticalContentAlignment="Center"
-                             MaxLength="3"/>
-                    <TextBlock VerticalAlignment="Center" 
-                               Margin="5,5,0,5">Y:
+                    <TextBox 
+                        x:Name="TextBoxLineStartX"
+                        Width="40" 
+                        Height="32" 
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        MaxLength="3"/>
+                    <TextBlock 
+                        VerticalAlignment="Center" 
+                        Margin="5,5,0,5">Y:
                     </TextBlock>
-                    <TextBox Width="40" 
-                             Height="32" 
-                             Margin="5"
-                             VerticalContentAlignment="Center"
-                             MaxLength="3"/>
+                    <TextBox 
+                        x:Name="TextBoxLineStartY"
+                        Width="40" 
+                        Height="32" 
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        MaxLength="3"/>
                 </DockPanel>
             </StackPanel>
             
+            <!-- Line End -->
             <StackPanel Margin="10">
-                <TextBlock VerticalAlignment="Center"  
-                           Margin="5,5,0,5">Point 2:
+                <TextBlock 
+                    VerticalAlignment="Center"
+                    Margin="5,5,0,5">Point 2:
                 </TextBlock>
                 <DockPanel HorizontalAlignment="Left">
-                    <TextBlock VerticalAlignment="Center"  
-                               Margin="5,5,0,5">X:
+                    <TextBlock 
+                        VerticalAlignment="Center"
+                        Margin="5,5,0,5">X:
                     </TextBlock>
-                    <TextBox Width="40" 
-                             Height="32" 
-                             Margin="5"
-                             VerticalContentAlignment="Center"
-                             MaxLength="3"/>
-                    <TextBlock VerticalAlignment="Center" 
-                               Margin="5,5,0,5">Y:
+                    <TextBox 
+                        x:Name="TextBoxLineEndX"
+                        Width="40" 
+                        Height="32" 
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        MaxLength="3"/>
+                    <TextBlock 
+                        VerticalAlignment="Center" 
+                        Margin="5,5,0,5">Y:
                     </TextBlock>
-                    <TextBox Width="40" 
-                             Height="32" 
-                             Margin="5"
-                             VerticalContentAlignment="Center"
-                             MaxLength="3"/>
+                    <TextBox
+                        x:Name="TextBoxLineEndY"
+                        Width="40" 
+                        Height="32" 
+                        Margin="5"
+                        VerticalContentAlignment="Center"
+                        MaxLength="3"/>
                 </DockPanel>
             </StackPanel>
         </DockPanel>
