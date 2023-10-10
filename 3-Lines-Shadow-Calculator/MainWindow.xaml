@@ -5,8 +5,96 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3_Lines_Shadow_Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Lines Shadow Calculator" Height="640" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Where the lines are drawn -->
+        <Canvas 
+            Grid.Row="0" 
+            Grid.Column="1"
+            Width="500"
+            Height="500"
+            Background="AliceBlue">
+            <Line
+                x:Name="LineX"
+                X1="0" Y1="250"
+                X2="500" Y2="250"
+                Stroke="Black"
+                StrokeThickness="1"/>
+        </Canvas>
+        
+        <!-- New lines input -->
+        <DockPanel 
+            Grid.Row="1" 
+            Grid.Column="1"
+            VerticalAlignment="Center">
+            <Button
+                x:Name="ButtonAddLine"
+                Height="32"
+                Width="60"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="15">
+                Add
+            </Button>
+            
+            <StackPanel Margin="10">
+                <TextBlock VerticalAlignment="Center"  
+                           Margin="5,5,0,5">Point 1:
+                </TextBlock>
+                <DockPanel>
+                    <TextBlock VerticalAlignment="Center"  
+                               Margin="5,5,0,5">X:
+                    </TextBlock>
+                    <TextBox Width="40" 
+                             Height="32" 
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             MaxLength="3"/>
+                    <TextBlock VerticalAlignment="Center" 
+                               Margin="5,5,0,5">Y:
+                    </TextBlock>
+                    <TextBox Width="40" 
+                             Height="32" 
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             MaxLength="3"/>
+                </DockPanel>
+            </StackPanel>
+            
+            <StackPanel Margin="10">
+                <TextBlock VerticalAlignment="Center"  
+                           Margin="5,5,0,5">Point 2:
+                </TextBlock>
+                <DockPanel HorizontalAlignment="Left">
+                    <TextBlock VerticalAlignment="Center"  
+                               Margin="5,5,0,5">X:
+                    </TextBlock>
+                    <TextBox Width="40" 
+                             Height="32" 
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             MaxLength="3"/>
+                    <TextBlock VerticalAlignment="Center" 
+                               Margin="5,5,0,5">Y:
+                    </TextBlock>
+                    <TextBox Width="40" 
+                             Height="32" 
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             MaxLength="3"/>
+                </DockPanel>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>
