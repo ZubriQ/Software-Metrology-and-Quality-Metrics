@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3_Lines_Shadow_Calculator"
         mc:Ignorable="d"
-        Title="Lines Shadow Calculator" Height="640" Width="700"
+        Title="Lines Shadow Calculator"
+        Height="640"
+        Width="700"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
@@ -26,21 +28,26 @@
             Width="500"
             Height="500"
             Background="AliceBlue">
+            <Canvas.LayoutTransform>
+                <ScaleTransform ScaleY="-1" />
+            </Canvas.LayoutTransform>
+
             <!-- Abscissa line -->
             <Line
                 x:Name="LineAbscissa"
                 X1="0" Y1="250"
                 X2="500" Y2="250"
-                  Stroke="DarkGray"
+                Stroke="DarkGray"
                 StrokeThickness="1"/>
             <!-- Ordinate line -->
-            <Line x:Name="LineOrdinate"
-                  X1="250"
-                  Y1="500"
-                  X2="250"
-                  Y2="0"
-                  Stroke="DarkGray"
-                  StrokeThickness="1" />
+            <Line 
+                x:Name="LineOrdinate"
+                X1="250"
+                Y1="500"
+                X2="250"
+                Y2="0"
+                Stroke="DarkGray"
+                StrokeThickness="1" />
         </Canvas>
         
         <!-- New lines input -->
@@ -57,7 +64,7 @@
                 VerticalAlignment="Bottom"
                 Margin="15"
                 Click="ButtonAddLine_OnClick">
-                Add
+                Add Line
             </Button>
             
             <!-- Line Start -->
@@ -137,13 +144,13 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Line: " />
                         <TextBlock Text="[" />
-                        <TextBlock Text="{Binding X1}" />
+                        <TextBlock Text="{Binding From.X}" />
                         <TextBlock Text=", " />
-                        <TextBlock Text="{Binding Y1}" />
+                        <TextBlock Text="{Binding From.Y}" />
                         <TextBlock Text=" - " />
-                        <TextBlock Text="{Binding X2}" />
+                        <TextBlock Text="{Binding To.X}" />
                         <TextBlock Text=", " />
-                        <TextBlock Text="{Binding Y2}" />
+                        <TextBlock Text="{Binding To.Y}" />
                         <TextBlock Text="]" />
                     </StackPanel>
                 </DataTemplate>

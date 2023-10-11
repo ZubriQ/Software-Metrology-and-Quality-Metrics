@@ -5,12 +5,12 @@ namespace _3_Lines_Shadow_Calculator.LineLibrary;
 
 public static class LineCreator
 {
-    public static Line CreateLine(Models.Point startPoint, Models.Point endPoint) => new()
+    public static Line CreateLine(Models.Point from, Models.Point to) => new()
     {
-        X1 = startPoint.X,
-        Y1 = startPoint.Y,
-        X2 = endPoint.X,
-        Y2 = endPoint.Y,
+        X1 = from.ActualX,
+        Y1 = from.ActualY,
+        X2 = to.ActualX,
+        Y2 = to.ActualY,
         Stroke = new SolidColorBrush(Colors.CornflowerBlue),
         StrokeThickness = 1
     };

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using _3_Lines_Shadow_Calculator.LineLibrary;
+using _3_Lines_Shadow_Calculator.Models;
 
 namespace _3_Lines_Shadow_Calculator;
 
@@ -22,15 +23,15 @@ namespace _3_Lines_Shadow_Calculator;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private ObservableCollection<Line> CanvasLines { get; }
+    private ObservableCollection<LineInfo> CanvasLinesInfo { get; }
     private Models.Point StartPoint => new(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
     private Models.Point EndPoint => new(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
         
     public MainWindow()
     {
         InitializeComponent();
-        CanvasLines = new ObservableCollection<Line>();
-        ListBoxLines.ItemsSource = CanvasLines;
+        CanvasLinesInfo = new ObservableCollection<LineInfo>();
+        ListBoxLines.ItemsSource = CanvasLinesInfo;
 
         //var lines = Canvas.Children.OfType<Line>().Where(l => l.Name != "LineAbscissa").ToArray();
     }
@@ -40,6 +41,7 @@ public partial class MainWindow : Window
         try
         {
             AddLineToCanvas();
+            StoreInfoAboutLine();
             ResetInput();
         }
         catch (FormatException)
@@ -52,8 +54,13 @@ public partial class MainWindow : Window
     private void AddLineToCanvas()
     {
         var line = LineCreator.CreateLine(StartPoint, EndPoint);
-        CanvasLines.Add(line);
         Canvas.Children.Add(line);
+    }
+
+    private void StoreInfoAboutLine()
+    {
+        var info = new LineInfo(StartPoint, EndPoint);
+        CanvasLinesInfo.Add(info);
     }
     
     private void ResetInput()
