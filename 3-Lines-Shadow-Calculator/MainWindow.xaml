@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3_Lines_Shadow_Calculator"
         mc:Ignorable="d"
-        Title="Lines Shadow Calculator" Height="640" Width="500"
+        Title="Lines Shadow Calculator" Height="640" Width="700"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
@@ -31,8 +31,16 @@
                 x:Name="LineAbscissa"
                 X1="0" Y1="250"
                 X2="500" Y2="250"
-                Stroke="Black"
+                  Stroke="DarkGray"
                 StrokeThickness="1"/>
+            <!-- Ordinate line -->
+            <Line x:Name="LineOrdinate"
+                  X1="250"
+                  Y1="500"
+                  X2="250"
+                  Y2="0"
+                  Stroke="DarkGray"
+                  StrokeThickness="1" />
         </Canvas>
         
         <!-- New lines input -->
@@ -116,5 +124,30 @@
                 </DockPanel>
             </StackPanel>
         </DockPanel>
+
+        <!-- List of existing lines on the Canvas -->
+        <ListBox 
+            x:Name="ListBoxLines"
+            Grid.Row="0" 
+            Grid.Column="0" 
+            Grid.RowSpan="2"
+            Width="200">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Line: " />
+                        <TextBlock Text="[" />
+                        <TextBlock Text="{Binding X1}" />
+                        <TextBlock Text=", " />
+                        <TextBlock Text="{Binding Y1}" />
+                        <TextBlock Text=" - " />
+                        <TextBlock Text="{Binding X2}" />
+                        <TextBlock Text=", " />
+                        <TextBlock Text="{Binding Y2}" />
+                        <TextBlock Text="]" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
