@@ -26,8 +26,9 @@
             Width="500"
             Height="500"
             Background="AliceBlue">
+            <!-- Abscissa line -->
             <Line
-                x:Name="LineX"
+                x:Name="LineAbscissa"
                 X1="0" Y1="250"
                 X2="500" Y2="250"
                 Stroke="Black"
@@ -46,7 +47,8 @@
                 Width="60"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Margin="15">
+                Margin="15"
+                Click="ButtonAddLine_OnClick">
                 Add
             </Button>
             
