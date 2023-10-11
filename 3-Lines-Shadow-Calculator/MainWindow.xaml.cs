@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using _3_Lines_Shadow_Calculator.LineLibrary;
 
 namespace _3_Lines_Shadow_Calculator
 {
@@ -20,6 +21,9 @@ namespace _3_Lines_Shadow_Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Models.Point EndPoint => new(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
+        private Models.Point StartPoint => new(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,20 +45,8 @@ namespace _3_Lines_Shadow_Calculator
 
         private void AddLineToCanvas()
         {
-            var startPoint = new Models.Point(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
-            var endPoint = new Models.Point(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
-            var line = CreateLine(startPoint, endPoint);
+            var line = LineCreator.CreateLine(StartPoint, EndPoint);
             Canvas.Children.Add(line);
         }
-
-        private static Line CreateLine(Models.Point startPoint, Models.Point endPoint) => new()
-        {
-            X1 = startPoint.X,
-            Y1 = startPoint.Y,
-            X2 = endPoint.X,
-            Y2 = endPoint.Y,
-            Stroke = new SolidColorBrush(Colors.CornflowerBlue),
-            StrokeThickness = 1
-        };
     }
 }
