@@ -53,7 +53,7 @@ public partial class MainWindow : Window
     
     private void AddLineToCanvas()
     {
-        var line = LineCreator.CreateLine(StartPoint, EndPoint);
+        var line = LineCreator.Create(StartPoint, EndPoint);
         Canvas.Children.Add(line);
     }
 

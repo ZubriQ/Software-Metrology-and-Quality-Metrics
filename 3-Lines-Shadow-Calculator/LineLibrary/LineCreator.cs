@@ -5,7 +5,7 @@ namespace _3_Lines_Shadow_Calculator.LineLibrary;
 
 public static class LineCreator
 {
-    public static Line CreateLine(Models.Point from, Models.Point to) => new()
+    public static Line Create(Models.Point from, Models.Point to) => new()
     {
         X1 = from.ActualX,
         Y1 = from.ActualY,
