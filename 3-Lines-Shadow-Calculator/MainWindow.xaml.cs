@@ -23,15 +23,15 @@ namespace _3_Lines_Shadow_Calculator;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private ObservableCollection<LineInfo> CanvasLinesInfo { get; }
+    private ObservableCollection<LineSegmentInfo> LineSegmentsInfo { get; }
     private Models.Point StartPoint => new(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
     private Models.Point EndPoint => new(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
         
     public MainWindow()
     {
         InitializeComponent();
-        CanvasLinesInfo = new ObservableCollection<LineInfo>();
-        ListBoxLines.ItemsSource = CanvasLinesInfo;
+        LineSegmentsInfo = new ObservableCollection<LineSegmentInfo>();
+        ListBoxLines.ItemsSource = LineSegmentsInfo;
 
         //var lines = Canvas.Children.OfType<Line>().Where(l => l.Name != "LineAbscissa").ToArray();
     }
@@ -53,14 +53,14 @@ public partial class MainWindow : Window
     
     private void AddLineToCanvas()
     {
-        var line = LineCreator.Create(StartPoint, EndPoint);
-        Canvas.Children.Add(line);
+        var lineSegment = FigureCreator.CreateLineSegment(StartPoint, EndPoint);
+        Canvas.Children.Add(lineSegment);
     }
 
     private void StoreInfoAboutLine()
     {
-        var info = new LineInfo(StartPoint, EndPoint);
-        CanvasLinesInfo.Add(info);
+        var lineSegmentInfo = new LineSegmentInfo(StartPoint, EndPoint);
+        LineSegmentsInfo.Add(lineSegmentInfo);
     }
     
     private void ResetInput()
