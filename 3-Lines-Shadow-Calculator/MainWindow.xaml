@@ -132,29 +132,34 @@
             </StackPanel>
         </DockPanel>
 
-        <!-- List of existing lines on the Canvas -->
-        <ListBox 
-            x:Name="ListBoxLines"
+        <StackPanel
             Grid.Row="0" 
             Grid.Column="0" 
             Grid.RowSpan="2"
             Width="200">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Line: " />
-                        <TextBlock Text="[" />
-                        <TextBlock Text="{Binding From.X}" />
-                        <TextBlock Text=", " />
-                        <TextBlock Text="{Binding From.Y}" />
-                        <TextBlock Text=" - " />
-                        <TextBlock Text="{Binding To.X}" />
-                        <TextBlock Text=", " />
-                        <TextBlock Text="{Binding To.Y}" />
-                        <TextBlock Text="]" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <!-- List of existing lines on the Canvas -->
+            <TextBlock Margin="10" FontSize="16">Lines:</TextBlock>
+            <ListBox x:Name="ListBoxLines">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Line " />
+                            <TextBlock Text="[" />
+                            <TextBlock Text="{Binding Path=From.X}" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="{Binding Path=From.Y}" />
+                            <TextBlock Text=" - " />
+                            <TextBlock Text="{Binding Path=To.X}" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="{Binding Path=To.Y}" />
+                            <TextBlock Text="]" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <!-- List of existing shadows of the lines on the Canvas -->
+            <TextBlock Margin="10" FontSize="16">Shadows:</TextBlock>
+        </StackPanel>
     </Grid>
 </Window>
