@@ -25,7 +25,8 @@ namespace _3_Lines_Shadow_Calculator;
 public partial class MainWindow : Window
 {
     private ObservableCollection<LineInfo> LineSegmentsInfo { get; }
-    private ObservableCollection<LineInfo> LineShadowsInfo { get; set; }
+    private ObservableCollection<LineInfo> LineShadowsInfo { get; }
+    
     private Models.Point StartPoint => new(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
     private Models.Point EndPoint => new(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
         
@@ -44,15 +45,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            // Add a new line segment.
-            AddLineToCanvas();
-            StoreInfoAboutLine();
-            // Render The abscissa and The ordinate; and Line segments back.
-            RenderXyPlane();
-            // Re-render shadows.
-            RenderShadows();
-            
-            //ResetInput();
+            AddLineAndRenderCanvasElements();
         }
         catch (FormatException)
         {
@@ -60,10 +53,23 @@ public partial class MainWindow : Window
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    
+
+    private void AddLineAndRenderCanvasElements()
+    {
+        // Add a new line segment.
+        AddLineToCanvas();
+        StoreInfoAboutLine();
+        // Render The abscissa and The ordinate; and Line segments back.
+        RenderXyPlane();
+        // Re-render shadows.
+        RenderShadows();
+
+        //ResetInput();
+    }
+
     private void AddLineToCanvas()
     {
-        var lineSegment = LineSegmentCreator.Create(StartPoint, EndPoint);
+        var lineSegment = LineSegmentCreator.CreateLineSegment(StartPoint, EndPoint);
         Canvas.Children.Add(lineSegment);
     }
 
@@ -82,25 +88,8 @@ public partial class MainWindow : Window
 
     private void InitializeXyPlaneLines()
     {
-        // TODO: move into the line segment creator class.
-        var abscissa = new Line
-        {
-            X1 = 0,
-            Y1 = 250,
-            X2 = 500,
-            Y2 = 250,
-            Stroke = Brushes.CadetBlue,
-            StrokeThickness = 1,
-        };
-        var ordinate = new Line
-        {
-            X1 = 250,
-            Y1 = 500,
-            X2 = 250,
-            Y2 = 0,
-            Stroke = Brushes.CadetBlue,
-            StrokeThickness = 1,
-        };
+        var abscissa = LineSegmentCreator.CreateAbscissa();
+        var ordinate = LineSegmentCreator.CreateOrdinate();
         Canvas.Children.Add(abscissa);
         Canvas.Children.Add(ordinate);
     }
@@ -109,7 +98,7 @@ public partial class MainWindow : Window
     {
         foreach (var line in LineSegmentsInfo)
         {
-            var lineSegment = LineSegmentCreator.Create(line.From, line.To);
+            var lineSegment = LineSegmentCreator.CreateLineSegment(line.From, line.To);
             Canvas.Children.Add(lineSegment);
         }
     }
@@ -122,12 +111,16 @@ public partial class MainWindow : Window
         foreach (var shadowLine in newShadowLines)
         {
             Canvas.Children.Add(shadowLine);
-            
-            var from = new Models.Point(shadowLine.X1, shadowLine.Y1);
-            var to = new Models.Point(shadowLine.X2, shadowLine.Y2);
-            var lineSegmentInfo = new LineInfo(from, to);
-            LineShadowsInfo.Add(lineSegmentInfo);
+            AddShadowInfo(shadowLine);
         }
+    }
+
+    private void AddShadowInfo(Line shadowLine)
+    {
+        var from = new Models.Point(shadowLine.X1, shadowLine.Y1);
+        var to = new Models.Point(shadowLine.X2, shadowLine.Y2);
+        var lineSegmentInfo = new LineInfo(from, to);
+        LineShadowsInfo.Add(lineSegmentInfo);
     }
 
     private void ResetInput()
