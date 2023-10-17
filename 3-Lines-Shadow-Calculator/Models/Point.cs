@@ -16,4 +16,12 @@ public readonly struct Point
         ActualX = Constants.CanvasCenterX + X;
         ActualY = Constants.CanvasCenterY + Y;
     }
+    
+    public Point(double x, double y)
+    {
+        ActualX = x;
+        ActualY = y;
+        X = ActualX - Constants.CanvasCenterX;
+        Y = ActualY - Constants.CanvasCenterY;
+    }
 }

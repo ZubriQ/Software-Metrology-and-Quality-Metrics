@@ -84,7 +84,8 @@
                         Height="32" 
                         Margin="5"
                         VerticalContentAlignment="Center"
-                        MaxLength="3"/>
+                        MaxLength="4"
+                        Text="-50"/>
                     <TextBlock 
                         VerticalAlignment="Center" 
                         Margin="5,5,0,5">Y:
@@ -95,7 +96,8 @@
                         Height="32" 
                         Margin="5"
                         VerticalContentAlignment="Center"
-                        MaxLength="3"/>
+                        MaxLength="4"
+                        Text="50" />
                 </DockPanel>
             </StackPanel>
             
@@ -116,7 +118,8 @@
                         Height="32" 
                         Margin="5"
                         VerticalContentAlignment="Center"
-                        MaxLength="3"/>
+                        MaxLength="4"
+                             Text="50" />
                     <TextBlock 
                         VerticalAlignment="Center" 
                         Margin="5,5,0,5">Y:
@@ -127,7 +130,8 @@
                         Height="32" 
                         Margin="5"
                         VerticalContentAlignment="Center"
-                        MaxLength="3"/>
+                        MaxLength="4"
+                        Text="50" />
                 </DockPanel>
             </StackPanel>
         </DockPanel>
@@ -160,6 +164,24 @@
             
             <!-- List of existing shadows of the lines on the Canvas -->
             <TextBlock Margin="10" FontSize="16">Shadows:</TextBlock>
+            <ListBox x:Name="ListBoxShadows">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Line " />
+                            <TextBlock Text="[" />
+                            <TextBlock Text="{Binding Path=From.X}" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="{Binding Path=From.Y}" />
+                            <TextBlock Text=" - " />
+                            <TextBlock Text="{Binding Path=To.X}" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="{Binding Path=To.Y}" />
+                            <TextBlock Text="]" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>
