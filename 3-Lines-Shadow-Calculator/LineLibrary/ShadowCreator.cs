@@ -14,15 +14,47 @@ public static class ShadowCreator
     
     public static List<Line> Create(ICollection<LineInfo> lines)
     {
-        var sortedLines = lines.OrderBy(l => l.From.X).ToList();
+        var result = new List<Line>();
         
-        // TODO: shadows algorithm
+        var sortedLines = lines.OrderBy(l => l.From.X).ToArray();
+        var visitedLines = new HashSet<LineInfo>();
         
-        return lines
-            .Select(line => CreateShadow(
-                new Point(line.From.X.ToString(CultureInfo.CurrentCulture), "0"), 
-                new Point(line.To.X.ToString(CultureInfo.CurrentCulture), "0")))
-            .ToList();
+        for (var i = 0; i < sortedLines.Length; i++)
+        {
+            if (!visitedLines.Add(sortedLines[i])) continue;
+
+            var shadowFromX = sortedLines[i].From.X;
+            var shadowToX = sortedLines[i].To.X;
+            for (var j = 0; j < sortedLines.Length; j++)
+            {
+                if (sortedLines[i].From.X == sortedLines[j].From.X && sortedLines[i].To.X == sortedLines[j].To.X) continue;
+
+                bool isVisited = false;
+                if (shadowFromX > sortedLines[j].From.X && shadowFromX <= sortedLines[j].To.X)
+                {
+                    shadowFromX = sortedLines[j].From.X;
+                    isVisited = true;
+                }
+                if (shadowToX < sortedLines[j].To.X && shadowToX >= sortedLines[j].From.X)
+                {
+                    shadowToX = sortedLines[j].To.X;
+                    isVisited = true;
+                }
+
+                if (isVisited)
+                {
+                    visitedLines.Add(sortedLines[i]);
+                }
+            }
+            
+            var shadowLine = CreateShadow(
+                new Point(shadowFromX.ToString(CultureInfo.CurrentCulture), "0"),
+                new Point(shadowToX.ToString(CultureInfo.CurrentCulture), "0"));
+            if (result.Any(line => line.X1 == shadowLine.X1 && line.X2 == shadowLine.X2)) continue;
+            result.Add(shadowLine);
+        }
+
+        return result;
     }
 
     private static Line CreateShadow(Point from, Point to) => new()
