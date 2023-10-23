@@ -21,15 +21,21 @@ public static class ShadowCreator
         
         for (var i = 0; i < sortedLines.Length; i++)
         {
-            if (!visitedLines.Add(sortedLines[i])) continue;
+            if (!visitedLines.Add(sortedLines[i]))
+            {
+                continue;
+            }
 
             var shadowFromX = sortedLines[i].From.X;
             var shadowToX = sortedLines[i].To.X;
             for (var j = 0; j < sortedLines.Length; j++)
             {
-                if (sortedLines[i].From.X == sortedLines[j].From.X && sortedLines[i].To.X == sortedLines[j].To.X) continue;
+                if (sortedLines[i].From.X == sortedLines[j].From.X && sortedLines[i].To.X == sortedLines[j].To.X)
+                {
+                    continue;
+                }
 
-                bool isVisited = false;
+                var isVisited = false;
                 if (shadowFromX > sortedLines[j].From.X && shadowFromX <= sortedLines[j].To.X)
                 {
                     shadowFromX = sortedLines[j].From.X;
@@ -50,7 +56,10 @@ public static class ShadowCreator
             var shadowLine = CreateShadow(
                 new Point(shadowFromX.ToString(CultureInfo.CurrentCulture), "0"),
                 new Point(shadowToX.ToString(CultureInfo.CurrentCulture), "0"));
-            if (result.Any(line => line.X1 == shadowLine.X1 && line.X2 == shadowLine.X2)) continue;
+            if (result.Any(line => line.X1 == shadowLine.X1 && line.X2 == shadowLine.X2))
+            {
+                continue;
+            }
             result.Add(shadowLine);
         }
 
