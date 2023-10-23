@@ -12,12 +12,11 @@ namespace _3_Lines_Shadow_Calculator;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private readonly Random _random = new Random();
+
     private ObservableCollection<LineInfo> LineSegmentsInfo { get; }
     private ObservableCollection<LineInfo> LineShadowsInfo { get; }
-    
-    private Models.Point StartPoint => new(TextBoxLineStartX.Text, TextBoxLineStartY.Text);
-    private Models.Point EndPoint => new(TextBoxLineEndX.Text, TextBoxLineEndY.Text);
-        
+
     public MainWindow()
     {
         InitializeComponent();
@@ -28,7 +27,16 @@ public partial class MainWindow : Window
         LineShadowsInfo = new ObservableCollection<LineInfo>();
         ListBoxShadows.ItemsSource = LineShadowsInfo;
     }
-    
+
+    private int GenerateRandomY() =>
+        _random.Next(5, Constants.CanvasCenterY - 5);
+
+    private Models.Point GenerateStartPoint(int randomY) =>
+        new Models.Point(TextBoxLineStartX.Text, randomY.ToString());
+
+    private Models.Point GenerateEndPoint(int randomY) =>
+        new Models.Point(TextBoxLineEndX.Text, randomY.ToString());
+
     private void ButtonAddLine_OnClick(object sender, RoutedEventArgs e)
     {
         try
@@ -45,8 +53,9 @@ public partial class MainWindow : Window
     private void AddLineAndRenderCanvasElements()
     {
         // Add a new line segment.
-        AddLineToCanvas();
-        StoreInfoAboutLine();
+        var randomY = GenerateRandomY();
+        AddLineToCanvas(randomY);
+        StoreInfoAboutLine(randomY);
         // Render The abscissa and The ordinate; and Line segments back.
         RenderXyPlane();
         // Re-render shadows.
@@ -55,15 +64,15 @@ public partial class MainWindow : Window
         //ResetInput();
     }
 
-    private void AddLineToCanvas()
+    private void AddLineToCanvas(int randomY)
     {
-        var lineSegment = LineSegmentCreator.CreateLineSegment(StartPoint, EndPoint);
+        var lineSegment = LineSegmentCreator.CreateLineSegment(GenerateStartPoint(randomY), GenerateEndPoint(randomY));
         Canvas.Children.Add(lineSegment);
     }
 
-    private void StoreInfoAboutLine()
+    private void StoreInfoAboutLine(int randomY)
     {
-        var lineSegmentInfo = new LineInfo(StartPoint, EndPoint);
+        var lineSegmentInfo = new LineInfo(GenerateStartPoint(randomY), GenerateEndPoint(randomY));
         LineSegmentsInfo.Add(lineSegmentInfo);
     }
 

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Lines Shadow Calculator"
         Height="640"
-        Width="700"
+        Width="750"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <Grid>
@@ -90,14 +90,21 @@
                         VerticalAlignment="Center" 
                         Margin="5,5,0,5">Y:
                     </TextBlock>
-                    <TextBox 
-                        x:Name="TextBoxLineStartY"
-                        Width="40" 
-                        Height="32" 
-                        Margin="5"
-                        VerticalContentAlignment="Center"
-                        MaxLength="4"
-                        Text="50" />
+                    <Grid>
+                        <TextBox 
+                            x:Name="TextBoxLineStartY"
+                            Width="50"
+                            Height="32"
+                            Margin="5"
+                            VerticalContentAlignment="Center"
+                            MaxLength="4"
+                            IsEnabled="False" />
+                        <TextBlock 
+                            Foreground="DimGray"
+                            VerticalAlignment="Center"
+                            Margin="7"
+                            Text="random" />
+                    </Grid>
                 </DockPanel>
             </StackPanel>
             
@@ -119,19 +126,27 @@
                         Margin="5"
                         VerticalContentAlignment="Center"
                         MaxLength="4"
-                             Text="50" />
+                        Text="50" />
                     <TextBlock 
                         VerticalAlignment="Center" 
                         Margin="5,5,0,5">Y:
                     </TextBlock>
-                    <TextBox
-                        x:Name="TextBoxLineEndY"
-                        Width="40" 
-                        Height="32" 
-                        Margin="5"
-                        VerticalContentAlignment="Center"
-                        MaxLength="4"
-                        Text="50" />
+                    <Grid>
+                        <TextBox 
+                            x:Name="TextBoxLineEndY"
+                            Width="50"
+                            Height="32"
+                            Margin="5"
+                            VerticalContentAlignment="Center"
+                            MaxLength="4"
+                            IsEnabled="False" />
+                        <TextBlock 
+                            Foreground="DimGray"
+                            VerticalAlignment="Center"
+                            Margin="7" 
+                            Text="random"/>
+                    </Grid>
+                    
                 </DockPanel>
             </StackPanel>
         </DockPanel>
@@ -140,10 +155,11 @@
             Grid.Row="0" 
             Grid.Column="0" 
             Grid.RowSpan="2"
-            Width="200">
+            Width="230">
             <!-- List of existing lines on the Canvas -->
             <TextBlock Margin="10" FontSize="16">Lines:</TextBlock>
-            <ListBox x:Name="ListBoxLines">
+            <ListBox x:Name="ListBoxLines"
+                     d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
@@ -164,7 +180,8 @@
             
             <!-- List of existing shadows of the lines on the Canvas -->
             <TextBlock Margin="10" FontSize="16">Shadows:</TextBlock>
-            <ListBox x:Name="ListBoxShadows">
+            <ListBox x:Name="ListBoxShadows"
+                     d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
@@ -177,7 +194,8 @@
                             <TextBlock Text="{Binding Path=To.X}" />
                             <TextBlock Text=", " />
                             <TextBlock Text="{Binding Path=To.Y}" />
-                            <TextBlock Text="]" />
+                            <TextBlock Text="] Length: " />
+                            <TextBlock Text="{Binding Path=Length}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
