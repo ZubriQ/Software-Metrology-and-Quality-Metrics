@@ -54,6 +54,7 @@ public static class ShadowCreator
             result.Add(shadowLine);
         }
 
+        // TODO: continue the algorithm getting the distances
         return result;
     }
 
