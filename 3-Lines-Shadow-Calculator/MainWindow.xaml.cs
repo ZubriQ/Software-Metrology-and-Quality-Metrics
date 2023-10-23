@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using _3_Lines_Shadow_Calculator.LineLibrary;
 using _3_Lines_Shadow_Calculator.Models;
@@ -107,19 +95,19 @@ public partial class MainWindow : Window
     {
         LineShadowsInfo.Clear();
         
-        var newShadowLines = ShadowCreator.Create(LineSegmentsInfo);
-        foreach (var shadowLine in newShadowLines)
+        var (shadows, lengths) = ShadowCreator.Create(LineSegmentsInfo);
+        for (var i = 0; i < shadows.Count; i++)
         {
-            Canvas.Children.Add(shadowLine);
-            AddShadowInfo(shadowLine);
+            Canvas.Children.Add(shadows[i]);
+            AddShadowInfo(shadows[i], lengths[i]);
         }
     }
 
-    private void AddShadowInfo(Line shadowLine)
+    private void AddShadowInfo(Line shadowLine, double length)
     {
         var from = new Models.Point(shadowLine.X1, shadowLine.Y1);
         var to = new Models.Point(shadowLine.X2, shadowLine.Y2);
-        var lineSegmentInfo = new LineInfo(from, to);
+        var lineSegmentInfo = new LineInfo(from, to, length);
         LineShadowsInfo.Add(lineSegmentInfo);
     }
 

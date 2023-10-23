@@ -11,60 +11,76 @@ namespace _3_Lines_Shadow_Calculator.LineLibrary;
 public static class ShadowCreator
 {
     private static int _instancesCount;
-    
-    public static List<Line> Create(ICollection<LineInfo> lines)
+    private static List<Line> _shadows = null!;
+    private static List<double> _shadowsLengths = null!;
+
+    /// <summary>
+    /// Creates shadows that based on lines.
+    /// </summary>
+    /// <param name="lines">Lines to shadow.</param>
+    /// <returns>Shadows of the lines.</returns>
+    public static (List<Line>, List<double>) Create(ICollection<LineInfo> lines)
     {
-        var result = new List<Line>();
+        _shadows = new List<Line>();
+        _shadowsLengths = new List<double>();
         
         var sortedLines = lines.OrderBy(l => l.From.X).ToArray();
-        var visitedLines = new HashSet<LineInfo>();
+        var checkedLines = new HashSet<LineInfo>();
         
-        for (var i = 0; i < sortedLines.Length; i++)
+        foreach (var sortedLine in sortedLines)
         {
-            if (!visitedLines.Add(sortedLines[i]))
+            if (!checkedLines.Add(sortedLine))
             {
                 continue;
             }
 
-            var shadowFromX = sortedLines[i].From.X;
-            var shadowToX = sortedLines[i].To.X;
-            for (var j = 0; j < sortedLines.Length; j++)
+            var shadowFromX = sortedLine.From.X;
+            var shadowToX = sortedLine.To.X;
+            
+            foreach (var line in sortedLines)
             {
-                if (sortedLines[i].From.X == sortedLines[j].From.X && sortedLines[i].To.X == sortedLines[j].To.X)
+                if (Math.Abs(sortedLine.From.X - line.From.X) < Constants.Tolerance &&
+                    Math.Abs(sortedLine.To.X - line.To.X) < Constants.Tolerance)
                 {
                     continue;
                 }
 
                 var isVisited = false;
-                if (shadowFromX > sortedLines[j].From.X && shadowFromX <= sortedLines[j].To.X)
+                if (shadowFromX >= line.From.X && shadowFromX <= line.To.X)
                 {
-                    shadowFromX = sortedLines[j].From.X;
+                    shadowFromX = line.From.X;
                     isVisited = true;
                 }
-                if (shadowToX < sortedLines[j].To.X && shadowToX >= sortedLines[j].From.X)
+                if (shadowToX <= line.To.X && shadowToX >= line.From.X)
                 {
-                    shadowToX = sortedLines[j].To.X;
+                    shadowToX = line.To.X;
                     isVisited = true;
                 }
-
+                
                 if (isVisited)
                 {
-                    visitedLines.Add(sortedLines[i]);
+                    checkedLines.Add(line);
                 }
             }
             
-            var shadowLine = CreateShadow(
-                new Point(shadowFromX.ToString(CultureInfo.CurrentCulture), "0"),
-                new Point(shadowToX.ToString(CultureInfo.CurrentCulture), "0"));
-            if (result.Any(line => line.X1 == shadowLine.X1 && line.X2 == shadowLine.X2))
-            {
-                continue;
-            }
-            result.Add(shadowLine);
+            AddShadow(shadowFromX, shadowToX);
         }
 
-        // TODO: continue the algorithm getting the distances
-        return result;
+        return (_shadows, _shadowsLengths);
+    }
+
+    private static void AddShadow(double shadowFromX, double shadowToX)
+    {
+        var shadowLine = CreateShadow(
+            new Point(shadowFromX.ToString(CultureInfo.CurrentCulture), "0"),
+            new Point(shadowToX.ToString(CultureInfo.CurrentCulture), "0"));
+        if (IsAlreadyExist(shadowLine))
+        {
+            return;
+        }
+
+        _shadows.Add(shadowLine);
+        _shadowsLengths.Add(CalculateDistance(shadowLine));
     }
 
     private static Line CreateShadow(Point from, Point to) => new()
@@ -78,10 +94,13 @@ public static class ShadowCreator
         StrokeThickness = 3
     };
 
-    private static double CalculateDistance(Point p1, Point p2)
+    private static bool IsAlreadyExist(Line shadowLine) =>
+        _shadows.Any(line => line.X1 == shadowLine.X1 || line.X2 == shadowLine.X2);
+
+    private static double CalculateDistance(Line shadow)
     {
-        var xDistance = p2.X - p1.X;
-        var yDistance = p2.Y - p1.Y;
+        var xDistance = shadow.X2 - shadow.X1;
+        var yDistance = shadow.Y2 - shadow.Y1;
 
         return Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2));
     }
