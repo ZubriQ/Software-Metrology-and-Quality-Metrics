@@ -200,6 +200,14 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <!-- Total shadows' length -->
+            <TextBlock 
+                Margin="10"
+                FontSize="16">
+                <Run Text="Total Length (S) = "/>
+                <Run Text="{Binding Path=TotalShadowsLength}" />
+            </TextBlock>
         </StackPanel>
     </Grid>
 </Window>

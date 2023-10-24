@@ -23,7 +23,7 @@ public static class ShadowCreator
     /// </summary>
     /// <param name="lines">Lines to shadow.</param>
     /// <returns>Shadows of the lines and their lengths.</returns>
-    public static (List<Line>, List<double>) Create(ICollection<LineInfo> lines)
+    public static (List<Line>, List<double>) Create(IEnumerable<LineInfo> lines)
     {
         _shadows = new List<Line>();
         _shadowsLengths = new List<double>();
@@ -64,7 +64,7 @@ public static class ShadowCreator
         Math.Abs(sortedLine.From.X - line.From.X) < Constants.Tolerance &&
         Math.Abs(sortedLine.To.X - line.To.X) < Constants.Tolerance;
 
-    private static void CheckLine(HashSet<LineInfo> checkedLines, LineInfo line)
+    private static void CheckLine(ISet<LineInfo> checkedLines, LineInfo line)
     {
         var isVisited = false;
         if (_shadowFromX >= line.From.X && _shadowFromX <= line.To.X)
@@ -110,7 +110,8 @@ public static class ShadowCreator
     };
 
     private static bool IsAlreadyExist(Line shadowLine) =>
-        _shadows.Any(line => line.X1 == shadowLine.X1 || line.X2 == shadowLine.X2);
+        _shadows.Any(line => Math.Abs(line.X1 - shadowLine.X1) < Constants.Tolerance ||
+                             Math.Abs(line.X2 - shadowLine.X2) < Constants.Tolerance);
 
     private static double CalculateDistance(Line shadow)
     {

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Shapes;
 using _3_Lines_Shadow_Calculator.LineLibrary;
@@ -10,17 +13,32 @@ namespace _3_Lines_Shadow_Calculator;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public sealed partial class MainWindow : INotifyPropertyChanged
 {
     private readonly Random _random = new();
 
     private ObservableCollection<LineInfo> LineSegmentsInfo { get; }
     private ObservableCollection<LineInfo> LineShadowsInfo { get; }
 
+    private double _totalShadowsLength;
+    public double TotalShadowsLength
+    {
+        get => _totalShadowsLength;
+        set
+        {
+            if (Math.Abs(_totalShadowsLength - value) > Constants.Tolerance)
+            {
+                _totalShadowsLength = value;
+                OnPropertyChanged(nameof(TotalShadowsLength));
+            }
+        }
+    }
+
     public MainWindow()
     {
         InitializeComponent();
-        
+        DataContext = this;
+
         LineSegmentsInfo = new ObservableCollection<LineInfo>();
         ListBoxLines.ItemsSource = LineSegmentsInfo;
         
@@ -51,18 +69,14 @@ public partial class MainWindow : Window
         RenderXyPlane();
         // Re-render shadows.
         RenderShadows();
-
-        //ResetInput();
+        TotalShadowsLength = SumLengths();
     }
 
-    private int GenerateRandomY() =>
-    _random.Next(5, Constants.CanvasCenterY - 5);
+    private int GenerateRandomY() => _random.Next(5, Constants.CanvasCenterY - 5);
 
-    private Models.Point GenerateStartPoint(int randomY) =>
-        new(TextBoxLineStartX.Text, randomY.ToString());
+    private Models.Point GenerateStartPoint(int randomY) => new(TextBoxLineStartX.Text, randomY.ToString());
 
-    private Models.Point GenerateEndPoint(int randomY) =>
-        new(TextBoxLineEndX.Text, randomY.ToString());
+    private Models.Point GenerateEndPoint(int randomY) => new(TextBoxLineEndX.Text, randomY.ToString());
 
     private void AddLineToCanvas(int randomY)
     {
@@ -120,11 +134,20 @@ public partial class MainWindow : Window
         LineShadowsInfo.Add(lineSegmentInfo);
     }
 
+    private double SumLengths() => LineShadowsInfo.Sum(shadow => shadow.Length);
+    
     private void ResetInput()
     {
         TextBoxLineStartX.Text = string.Empty;
         TextBoxLineStartY.Text = string.Empty;
         TextBoxLineEndX.Text = string.Empty;
         TextBoxLineEndY.Text = string.Empty;
+    }
+    
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName = null!)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
