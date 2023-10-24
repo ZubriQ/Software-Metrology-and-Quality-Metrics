@@ -28,34 +28,22 @@ public static class ShadowCreator
         _shadows = new List<Line>();
         _shadowsLengths = new List<double>();
         
-        var sortedLines = lines.OrderBy(l => l.From.X).ToArray();
         var checkedLines = new HashSet<LineInfo>();
-        
-        foreach (var sortedLine in sortedLines)
+        foreach (var line in lines.Where(sortedLine => checkedLines.Add(sortedLine)))
         {
-            if (!checkedLines.Add(sortedLine))
-            {
-                continue;
-            }
-
-            _shadowFromX = sortedLine.From.X;
-            _shadowToX = sortedLine.To.X;
-            CheckLines(sortedLines, checkedLines, sortedLine);
+            _shadowFromX = line.From.X;
+            _shadowToX = line.To.X;
+            CheckLines(lines, checkedLines, line);
             AddShadow(_shadowFromX, _shadowToX);
         }
 
         return (_shadows, _shadowsLengths);
     }
 
-    private static void CheckLines(LineInfo[] sortedLines, HashSet<LineInfo> checkedLines, LineInfo sortedLine)
+    private static void CheckLines(IEnumerable<LineInfo> sortedLines, ISet<LineInfo> checkedLines, LineInfo sortedLine)
     {
-        foreach (var line in sortedLines)
+        foreach (var line in sortedLines.Where(line => !IsSameLine(sortedLine, line)))
         {
-            if (IsSameLine(sortedLine, line))
-            {
-                continue;
-            }
-
             CheckLine(checkedLines, line);
         }
     }

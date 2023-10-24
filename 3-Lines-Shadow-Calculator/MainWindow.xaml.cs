@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -16,7 +17,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 {
     private readonly Random _random = new();
 
-    private ObservableCollection<LineInfo> LineSegmentsInfo { get; }
+    private ObservableCollection<LineInfo> _lineSegmentsInfo;
+    public ObservableCollection<LineInfo> LineSegmentsInfo
+    {
+        get { return _lineSegmentsInfo; }
+        set
+        {
+            _lineSegmentsInfo = value;
+            OnPropertyChanged(nameof(LineSegmentsInfo));
+        }
+    }
+    
     private ObservableCollection<LineInfo> LineShadowsInfo { get; }
 
     private double _totalShadowsLength;
@@ -117,6 +128,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         LineShadowsInfo.Clear();
         
+        LineSegmentsInfo.Sort((line1, line2) => line1.From.X.CompareTo(line2.From.X));
         var (shadows, lengths) = ShadowCreator.Create(LineSegmentsInfo);
         for (var i = 0; i < shadows.Count; i++)
         {
