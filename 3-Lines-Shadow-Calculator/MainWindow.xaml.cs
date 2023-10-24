@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -72,7 +71,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         TotalShadowsLength = SumLengths();
     }
 
-    private int GenerateRandomY() => _random.Next(5, Constants.CanvasCenterY - 5);
+    private int GenerateRandomY() => _random.Next(5, 100);
 
     private Models.Point GenerateStartPoint(int randomY) => new(TextBoxLineStartX.Text, randomY.ToString());
 
@@ -135,14 +134,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private double SumLengths() => LineShadowsInfo.Sum(shadow => shadow.Length);
-    
-    private void ResetInput()
-    {
-        TextBoxLineStartX.Text = string.Empty;
-        TextBoxLineStartY.Text = string.Empty;
-        TextBoxLineEndX.Text = string.Empty;
-        TextBoxLineEndY.Text = string.Empty;
-    }
     
     public event PropertyChangedEventHandler? PropertyChanged;
 
