@@ -11,14 +11,18 @@ namespace _3_Lines_Shadow_Calculator.LineLibrary;
 public static class ShadowCreator
 {
     private static int _instancesCount;
+
     private static List<Line> _shadows = null!;
     private static List<double> _shadowsLengths = null!;
+
+    private static double _shadowFromX;
+    private static double _shadowToX;
 
     /// <summary>
     /// Creates shadows that based on lines.
     /// </summary>
     /// <param name="lines">Lines to shadow.</param>
-    /// <returns>Shadows of the lines.</returns>
+    /// <returns>Shadows of the lines and their lengths.</returns>
     public static (List<Line>, List<double>) Create(ICollection<LineInfo> lines)
     {
         _shadows = new List<Line>();
@@ -34,39 +38,50 @@ public static class ShadowCreator
                 continue;
             }
 
-            var shadowFromX = sortedLine.From.X;
-            var shadowToX = sortedLine.To.X;
-            
-            foreach (var line in sortedLines)
-            {
-                if (Math.Abs(sortedLine.From.X - line.From.X) < Constants.Tolerance &&
-                    Math.Abs(sortedLine.To.X - line.To.X) < Constants.Tolerance)
-                {
-                    continue;
-                }
-
-                var isVisited = false;
-                if (shadowFromX >= line.From.X && shadowFromX <= line.To.X)
-                {
-                    shadowFromX = line.From.X;
-                    isVisited = true;
-                }
-                if (shadowToX <= line.To.X && shadowToX >= line.From.X)
-                {
-                    shadowToX = line.To.X;
-                    isVisited = true;
-                }
-                
-                if (isVisited)
-                {
-                    checkedLines.Add(line);
-                }
-            }
-            
-            AddShadow(shadowFromX, shadowToX);
+            _shadowFromX = sortedLine.From.X;
+            _shadowToX = sortedLine.To.X;
+            CheckLines(sortedLines, checkedLines, sortedLine);
+            AddShadow(_shadowFromX, _shadowToX);
         }
 
         return (_shadows, _shadowsLengths);
+    }
+
+    private static void CheckLines(LineInfo[] sortedLines, HashSet<LineInfo> checkedLines, LineInfo sortedLine)
+    {
+        foreach (var line in sortedLines)
+        {
+            if (IsSameLine(sortedLine, line))
+            {
+                continue;
+            }
+
+            CheckLine(checkedLines, line);
+        }
+    }
+
+    private static bool IsSameLine(LineInfo sortedLine, LineInfo line) =>
+        Math.Abs(sortedLine.From.X - line.From.X) < Constants.Tolerance &&
+        Math.Abs(sortedLine.To.X - line.To.X) < Constants.Tolerance;
+
+    private static void CheckLine(HashSet<LineInfo> checkedLines, LineInfo line)
+    {
+        var isVisited = false;
+        if (_shadowFromX >= line.From.X && _shadowFromX <= line.To.X)
+        {
+            _shadowFromX = line.From.X;
+            isVisited = true;
+        }
+        if (_shadowToX <= line.To.X && _shadowToX >= line.From.X)
+        {
+            _shadowToX = line.To.X;
+            isVisited = true;
+        }
+
+        if (isVisited)
+        {
+            checkedLines.Add(line);
+        }
     }
 
     private static void AddShadow(double shadowFromX, double shadowToX)

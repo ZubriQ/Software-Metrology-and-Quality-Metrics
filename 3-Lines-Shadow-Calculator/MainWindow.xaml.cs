@@ -12,7 +12,7 @@ namespace _3_Lines_Shadow_Calculator;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly Random _random = new Random();
+    private readonly Random _random = new();
 
     private ObservableCollection<LineInfo> LineSegmentsInfo { get; }
     private ObservableCollection<LineInfo> LineShadowsInfo { get; }
@@ -27,15 +27,6 @@ public partial class MainWindow : Window
         LineShadowsInfo = new ObservableCollection<LineInfo>();
         ListBoxShadows.ItemsSource = LineShadowsInfo;
     }
-
-    private int GenerateRandomY() =>
-        _random.Next(5, Constants.CanvasCenterY - 5);
-
-    private Models.Point GenerateStartPoint(int randomY) =>
-        new Models.Point(TextBoxLineStartX.Text, randomY.ToString());
-
-    private Models.Point GenerateEndPoint(int randomY) =>
-        new Models.Point(TextBoxLineEndX.Text, randomY.ToString());
 
     private void ButtonAddLine_OnClick(object sender, RoutedEventArgs e)
     {
@@ -63,6 +54,15 @@ public partial class MainWindow : Window
 
         //ResetInput();
     }
+
+    private int GenerateRandomY() =>
+    _random.Next(5, Constants.CanvasCenterY - 5);
+
+    private Models.Point GenerateStartPoint(int randomY) =>
+        new(TextBoxLineStartX.Text, randomY.ToString());
+
+    private Models.Point GenerateEndPoint(int randomY) =>
+        new(TextBoxLineEndX.Text, randomY.ToString());
 
     private void AddLineToCanvas(int randomY)
     {
