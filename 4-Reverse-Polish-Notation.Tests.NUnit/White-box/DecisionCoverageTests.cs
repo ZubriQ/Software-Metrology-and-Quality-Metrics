@@ -10,6 +10,7 @@ internal class DecisionCoverageTests
     }
 
     [TestCase("a + b", "incorrect data")]
+    [TestCase("60 + 10", "incorrect data")]
     public void When_InvalidInput(string infixExpression, string expectedPostfixExpression)
     {
         Tester.TestToPostfixExpression(infixExpression, expectedPostfixExpression);
