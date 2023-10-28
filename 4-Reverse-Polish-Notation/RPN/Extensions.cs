@@ -20,12 +20,9 @@ public static class Extensions
     private static string ConvertToPostfix(string infixExpression)
     {
         InitializeArrays();
-        var isValidExpression = IsExpressionValid(infixExpression);
-        if (!isValidExpression)
+        if (!IsExpressionValid(infixExpression))
         {
-            {
-                return "incorrect data";
-            }
+            return "incorrect data";
         }
 
         foreach (var token in infixExpression)
