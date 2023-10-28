@@ -13,8 +13,8 @@ internal class EquivalencePartitioningTests
     }
 
     [TestCase("(2 + 11 / (7 - 1))", "incorrect data")]
-    [TestCase("3 + 4 * a", "incorrect data")]
-    [TestCase("8 + 99 - 1", "incorrect data")]
+    [TestCase("c + b * a", "incorrect data")]
+    [TestCase("77 + 99 - 10", "incorrect data")]
     public void When_InvalidInput(string infixExpression, string expectedPostfixExpression)
     {
         Tester.TestToPostfixExpression(infixExpression, expectedPostfixExpression);
