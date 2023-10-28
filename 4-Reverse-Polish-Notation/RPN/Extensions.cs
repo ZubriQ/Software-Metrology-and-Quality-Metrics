@@ -2,6 +2,9 @@
 
 public static class Extensions
 {
+    private static Stack<char> _operators = null!;
+    private static List<char> _postfixExpression = null!;
+
     public static string ToPostfix(this string inputConverter) => 
         ConvertToPostfix(inputConverter.Replace(" ", ""));
 
@@ -16,31 +19,37 @@ public static class Extensions
 
     private static string ConvertToPostfix(string infixExpression)
     {
-        var operators = new Stack<char>();
-        var postfixExpression = new List<char>();
+        InitializeArrays();
+        var isValidExpression = IsExpressionValid(infixExpression);
+        if (!isValidExpression)
+        {
+            {
+                return "incorrect data";
+            }
+        }
 
         foreach (var token in infixExpression)
         {
             if (char.IsDigit(token))
             {
-                postfixExpression.Add(token);
+                _postfixExpression.Add(token);
             }
             else switch (token)
             {
                 case '(':
-                    operators.Push(token);
+                    _operators.Push(token);
                     break;
                 case ')':
                 {
-                    while (operators.Count > 0 && operators.Peek() != '(')
+                    while (_operators.Count > 0 && _operators.Peek() != '(')
                     {
-                        postfixExpression.Add(operators.Pop());
+                        _postfixExpression.Add(_operators.Pop());
                     }
 
-                    if (operators.Count > 0 && operators.Peek() == '(')
+                    if (_operators.Count > 0 && _operators.Peek() == '(')
                     {
                         // Remove an opening bracket from the stack.
-                        operators.Pop();
+                        _operators.Pop();
                     }
                     else
                     {
@@ -53,27 +62,52 @@ public static class Extensions
                 // It is an operator.
                 default:
                 {
-                    while (operators.Count > 0 && GetOperatorPriority(token) <= GetOperatorPriority(operators.Peek()))
+                    while (_operators.Count > 0 && GetOperatorPriority(token) <= GetOperatorPriority(_operators.Peek()))
                     {
-                        postfixExpression.Add(operators.Pop());
+                        _postfixExpression.Add(_operators.Pop());
                     }
-                    operators.Push(token);
+                    _operators.Push(token);
                     break;
                 }
             }
         }
 
         // Add remaining operators from the stack into a postfix expression.
-        while (operators.Count > 0)
+        while (_operators.Count > 0)
         {
-            if (operators.Peek() == '(' || operators.Peek() == ')')
+            if (_operators.Peek() == '(' || _operators.Peek() == ')')
             {
                 Console.WriteLine("Error: Inconsistent parentheses in an expression.");
                 return null!;
             }
-            postfixExpression.Add(operators.Pop());
+            _postfixExpression.Add(_operators.Pop());
         }
 
-        return new string(postfixExpression.ToArray());
+        return new string(_postfixExpression.ToArray());
     }
+
+    private static void InitializeArrays()
+    {
+        _operators = new Stack<char>();
+        _postfixExpression = new List<char>();
+    }
+
+    private static bool IsExpressionValid(string expression) =>
+        IsAllNumbersSingleDigit(expression) && IsNoLetterExist(expression);
+
+    private static bool IsAllNumbersSingleDigit(string expression)
+    {
+        for (int i = 0; i < expression.Length - 1; i++)
+        {
+            if (char.IsDigit(expression[i]) && char.IsDigit(expression[i + 1]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsNoLetterExist(string expression) =>
+        expression.All(c => !char.IsLetter(c));
 }
