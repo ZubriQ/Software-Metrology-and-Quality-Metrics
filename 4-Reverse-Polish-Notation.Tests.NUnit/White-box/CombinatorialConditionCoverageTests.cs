@@ -12,8 +12,8 @@ internal class CombinatorialConditionCoverageTests
     }
 
     [TestCase("t / m", "incorrect data")]
-    [TestCase("(", "incorrect data")]
-    [TestCase("(", "incorrect data")]
+    [TestCase("(", "incorrect data")] // Fails with null.
+    [TestCase(")", "incorrect data")] // Fails with null.
     [TestCase("[9]", "incorrect data")] // Should fail.
     public void When_InvalidInput(string infixExpression, string expectedPostfixExpression)
     {
