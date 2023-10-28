@@ -8,6 +8,7 @@ internal static class Tester
     {
         // Act
         var postfixExpression = infixExpression.ToPostfix();
+
         // Assert
         Assert.That(expectedPostfixExpression, Is.EqualTo(postfixExpression));
     }
