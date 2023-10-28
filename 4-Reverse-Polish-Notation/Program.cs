@@ -1,21 +1,15 @@
-﻿using _4_Reverse_Polish_Notation.Library;
+﻿using _4_Reverse_Polish_Notation.RPN;
 
 namespace _4_Reverse_Polish_Notation;
 
-internal class Program
+internal static class Program
 {
-    static void Main()
+    private static void Main()
     {
-        while (true)
-        {
-            string infixExpression = "3 + 4 * (2 - 1)";
-            string postfixExpression = infixExpression.ToPostfix();
-            if (postfixExpression != null)
-            {
-                Console.WriteLine("Postfix: " + postfixExpression);
-            }
+        const string infixExpression = "3 + 4 * (2 - 1)";
+        var postfixExpression = infixExpression.ToPostfix();
+        Console.WriteLine("Postfix: " + postfixExpression);
 
-            Console.ReadLine();
-        }
+        Console.ReadLine();
     }
 }
