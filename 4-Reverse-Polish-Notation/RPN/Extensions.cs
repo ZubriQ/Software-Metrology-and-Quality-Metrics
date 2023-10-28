@@ -50,7 +50,7 @@ public static class Extensions
                     }
                     else
                     {
-                        Console.WriteLine("Error: Inconsistent parentheses in an expression.");
+                        Console.WriteLine("incorrect data");
                         return null!;
                     }
 
@@ -74,7 +74,7 @@ public static class Extensions
         {
             if (_operators.Peek() == '(' || _operators.Peek() == ')')
             {
-                Console.WriteLine("Error: Inconsistent parentheses in an expression.");
+                Console.WriteLine("incorrect data");
                 return null!;
             }
             _postfixExpression.Add(_operators.Pop());
