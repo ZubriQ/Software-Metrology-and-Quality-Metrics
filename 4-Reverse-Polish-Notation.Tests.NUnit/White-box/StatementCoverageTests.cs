@@ -1,5 +1,6 @@
 ﻿namespace _4_Reverse_Polish_Notation.Tests.NUnit.White_box;
 
+[TestFixture]
 internal class StatementCoverageTests
 {
     [TestCase("3 * (5 - 1) / (4 + 4)", "351-*44+/")]
