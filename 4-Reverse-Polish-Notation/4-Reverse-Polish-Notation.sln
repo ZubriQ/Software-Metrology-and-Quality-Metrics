@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4-Reverse-Polish-Notation", "4-Reverse-Polish-Notation.csproj", "{BE61DFA9-2103-4582-80C8-04706B958997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4-Reverse-Polish-Notation", "4-Reverse-Polish-Notation.csproj", "{BE61DFA9-2103-4582-80C8-04706B958997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4-Reverse-Polish-Notation.Tests.NUnit", "..\4-Reverse-Polish-Notation.Tests.NUnit\4-Reverse-Polish-Notation.Tests.NUnit.csproj", "{5F907AED-6014-4559-9AC1-3DC7C165E6CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BE61DFA9-2103-4582-80C8-04706B958997}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE61DFA9-2103-4582-80C8-04706B958997}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE61DFA9-2103-4582-80C8-04706B958997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F907AED-6014-4559-9AC1-3DC7C165E6CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F907AED-6014-4559-9AC1-3DC7C165E6CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F907AED-6014-4559-9AC1-3DC7C165E6CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F907AED-6014-4559-9AC1-3DC7C165E6CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
